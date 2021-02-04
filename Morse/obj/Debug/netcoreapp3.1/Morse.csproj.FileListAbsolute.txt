@@ -35,3 +35,4 @@ C:\Users\Gehova\source\repos\Morse\Morse\obj\Debug\netcoreapp3.1\Morse.genruntim
 C:\Users\Gehova\source\repos\Morse\Morse\obj\Debug\netcoreapp3.1\Morse.csproj.CopyComplete
 C:\Users\Gehova\source\repos\Morse\Morse\obj\Debug\netcoreapp3.1\Razor\Views\Translator\Index.cshtml.g.cs
 C:\Users\Gehova\source\repos\Morse\Morse\obj\Debug\netcoreapp3.1\Razor\Views\Translator\Translated.cshtml.g.cs
+C:\Users\Gehova\source\repos\Morse\Morse\obj\Debug\netcoreapp3.1\Razor\Views\Main\Index.cshtml.g.cs

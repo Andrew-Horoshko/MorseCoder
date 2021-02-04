@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Morse.Views.Translator
+namespace Morse.Views.Main
 {
     public class IndexModel : PageModel
     {
         public void OnGet()
         {
         }
-
     }
 }

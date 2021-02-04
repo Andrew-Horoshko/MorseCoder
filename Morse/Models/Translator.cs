@@ -9,19 +9,25 @@ namespace Morse.Models
     public class Translator
     {
         public string fromText { get; set; }
+        public string path { get; set; }
 
+        ~Translator(){
+            File.Delete(@"wwwroot\sound\" + fromText + "res" + ".mp3");
+        }
         public string MorseCode()
         {
             Initiate();
-            return @"~/sound/candy.mp3";
+            return path;
         }
+       
         public string Initiate()
         {
-            string path = @"wwwroot\sound\";
-            var v = File.Create(@"wwwroot\sound\candy.mp3");
+            string pathAbsolute = @"wwwroot\sound\";
+            path = @"~/sound/" + fromText +"res"+".mp3";
+            var v = File.Create(@"wwwroot\sound\"+fromText+"res"+".mp3");
             char[] textToLetters = fromText.ToCharArray();
             for (int i = 0; i < textToLetters.Length; i++) { 
-                v.Write(File.ReadAllBytes(path + textToLetters[i] + ".mp3"));
+                v.Write(File.ReadAllBytes(pathAbsolute + textToLetters[i] + ".mp3"));
             }
             v.Close();
             return null;

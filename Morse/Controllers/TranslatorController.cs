@@ -19,7 +19,9 @@ namespace Morse.Controllers
             {
                 fromText = fromText
             };
+            temp.path = temp.MorseCode();
             return View(temp);
         }
+       
     }
 }

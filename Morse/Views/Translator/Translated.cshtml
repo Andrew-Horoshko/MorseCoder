@@ -2,7 +2,13 @@
 @model Morse.Models.Translator
 @{
 }
-
-<audio controls="controls">
-    <source src="@Url.Content(@Model.MorseCode())" type="audio/mpeg" />
+<head>
+    <link rel="stylesheet" href="~/css/custom.css" />
+</head>
+<form action="Translated" method="post">
+    <input type="text" style="margin-top:70px" name="fromText" placeholder="Enter text to work with here" value="@Model.fromText" />
+    <button class="btn-primary" type="submit">Morse</button>
+</form>
+<audio controls="controls" style="margin-top:50px">
+    <source src="@Url.Content(Model.path)" type="audio/mpeg" />
 </audio>

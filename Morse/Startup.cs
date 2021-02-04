@@ -50,7 +50,7 @@ namespace Morse
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Translator}/{action=Index}/{id?}");
+                    pattern: "{controller=Main}/{action?}/{id?}");
             });
         }
     }
