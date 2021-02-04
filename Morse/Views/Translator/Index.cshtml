@@ -1,0 +1,13 @@
+﻿@page
+@model Morse.Views.Translator.IndexModel
+@{
+}
+<head>
+    
+    <link rel="stylesheet" href="~/css/custom.css" />
+</head>
+
+<form action="Translated" method="post">
+    <input type="text" id="fromText" name="fromText" placeholder="Enter text to work with here" />
+    <button class="btn-primary" type="submit">Morse</button>
+</form>

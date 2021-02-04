@@ -1,0 +1,8 @@
+﻿@using Morse.Models
+@model Morse.Models.Translator
+@{
+}
+
+<audio controls="controls">
+    <source src="@Url.Content(@Model.MorseCode())" type="audio/mpeg" />
+</audio>
