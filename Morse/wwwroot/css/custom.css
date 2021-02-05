@@ -15,9 +15,7 @@
     height:300px;
 }
 #info{
-    position:absolute;
-    margin-bottom: 100px ; 
-    margin-left: 700px;
+
 }
 #mainTr{
 
@@ -27,8 +25,11 @@
 #InfoDiv {
     width: 550px;
     height: 500px;
-    position:absolute;
-    left:700px;
-    top:135px;
 
+
+}
+#BigDiv{
+    display:flex;
+    width:1400px;
+    height:600px;
 }

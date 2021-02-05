@@ -34,12 +34,13 @@ namespace Morse.Models
             GetTextCode();
             return path;
         }
-        private void Initiate()
+        private bool Initiate()
         {
+            try { 
             WhiteSpaceDemlisher();
             string pathAbsolute = @"wwwroot\sound\";
-            path = @"~/sound/" + fromText +"res"+".mp3";
-            var v = File.Create(@"wwwroot\sound\"+fromText+"res"+".mp3");
+            path = @"~/sound/" + fromText + "res" + ".mp3";
+            var v = File.Create(@"wwwroot\sound\" + fromText + "res" + ".mp3");
             char[] textToLetters = fromText.ToCharArray();
             for (int i = 0; i < textToLetters.Length; i++) {
                 if (Char.IsLetterOrDigit(textToLetters[i]))
@@ -48,17 +49,32 @@ namespace Morse.Models
                 }
             }
             v.Close();
-        }
-        private void GetTextCode()
-        {
-            toMorseCode = "";
-            char[] textToLetters = fromText.ToCharArray();
-            for(int i = 0; i < textToLetters.Length;i++)
+                return true;
+            }
+              catch
             {
-                if (Char.IsLetterOrDigit(textToLetters[i]))
+                fromText = "Incorrect Value";
+                return false;
+            }
+        }
+        private bool GetTextCode()
+        {
+            try
+            {
+                toMorseCode = "";
+                char[] textToLetters = fromText.ToCharArray();
+                for (int i = 0; i < textToLetters.Length; i++)
                 {
-                    toMorseCode += morseLettersCodes[textToLetters[i]] + "\t";
+                    if (Char.IsLetterOrDigit(textToLetters[i]))
+                    {
+                        toMorseCode += morseLettersCodes[textToLetters[i]] + "\t";
+                    }
                 }
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
         private void WhiteSpaceDemlisher()
