@@ -5,10 +5,16 @@
 <head>
     <link rel="stylesheet" href="~/css/custom.css" />
 </head>
-<form action="Translated" method="post">
-    <input type="text" style="margin-top:70px" name="fromText" placeholder="Enter text to work with here" value="@Model.fromText" />
-    <button class="btn-primary" type="submit">Morse</button>
-</form>
-<audio controls="controls" style="margin-top:50px">
-    <source src="@Url.Content(Model.path)" type="audio/mpeg" />
-</audio>
+    <div id="mainTr">
+        <form action="Translated" method="post">
+            <textarea style="margin-top:70px;" id="fromText" name="fromText" placeholder="Enter text to work with here">@Model.fromText</textarea>
+            <button type="submit" class="btn btn-primary btn-lg btn-block" style="width:500px;">Morse</button>
+        </form>
+    </div>
+    <div id="InfoDiv">
+        <textarea readonly style="height:200px; width:500px; margin-top:20px; font-size:26px;" class="form-control is-valid">@Model.toMorseCode</textarea>
+        <audio controls="controls"   style="margin-top:5px;">
+            <source src="@Url.Content(Model.path)" type="audio/mpeg" />
+        </audio>
+    </div>
+

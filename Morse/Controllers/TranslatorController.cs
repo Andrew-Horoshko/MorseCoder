@@ -9,6 +9,7 @@ namespace Morse.Controllers
 {
     public class TranslatorController : Controller
     {
+
         public IActionResult Index()
         {
             return View();

@@ -3,11 +3,26 @@
 @{
 }
 <head>
-    
+
     <link rel="stylesheet" href="~/css/custom.css" />
 </head>
-
-<form action="Translated" method="post">
-    <input type="text" id="fromText" name="fromText" placeholder="Enter text to work with here" />
-    <button class="btn-primary" type="submit">Morse</button>
-</form>
+<div id="mainTr">
+    <form action="Translated" method="post">
+        <textarea style="margin-top:70px;" id="fromText" name="fromText" placeholder="Enter text to work with here"></textarea>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" style="width:500px;">Morse</button>
+    </form>
+</div>
+<div id="InfoDiv">
+    <h2>How do I get my message to Morse Code?</h2>
+    <p class="text-info">
+        1.Write your message in the given text area<br />
+        2.Check if everything's correct , don't be a dumbass<br />
+        3.Click Morse and enjoy the  provided magic
+    </p>
+    <br />
+    <p class="text-warning">
+        - Beware not to use incorrect characters , only letters and numbers are allowed .<br />
+        - Use only latin characters , others won't be translated correctly.<br />
+        - Don't use any naughty words .<br />
+    </p>
+</div>

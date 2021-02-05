@@ -11,12 +11,22 @@ namespace Morse.Models
         public string fromText { get; set; }
         public string path { get; set; }
 
+        public string toMorseCode { get; set; }
+
+        private readonly Dictionary<char, string> morseLettersCodes = new Dictionary<char, string> { { 'a', ".-" },{ 'b', "-..." },
+            {'c' , "-.-."} ,{'d',"-.." },{'e',"." },{'f',"..-." },{'g',"--." },{'h',"...." }
+            ,{'i',".."},{'j',".---" },{'k',"-.-" },{'l',".-.." },{'m',"--"},{'n',"-." },
+            {'o',"---"},{'p',".--." },{'q',"--.-"},{'r',".-." },{'s',"..."},{ 't',"-"},
+            {'u',"..-" },{'v',"...-" },{'w',".--" },{'x',"-..-" },{'y',"-.--" } ,{'z',"--.." } };
+
+
         ~Translator(){
             File.Delete(@"wwwroot\sound\" + fromText + "res" + ".mp3");
         }
         public string MorseCode()
         {
             Initiate();
+            GetTextCode();
             return path;
         }
        
@@ -31,6 +41,15 @@ namespace Morse.Models
             }
             v.Close();
             return null;
+        }
+        private void GetTextCode()
+        {
+            toMorseCode = "";
+            char[] textToLetters = fromText.ToCharArray();
+            for(int i = 0; i < textToLetters.Length;i++)
+            {
+                toMorseCode += morseLettersCodes[textToLetters[i]]+"\t" ;
+            }
         }
        
     }
