@@ -9,19 +9,17 @@ namespace Morse.Controllers
 {
     public class TranslatorController : Controller
     {
-
+        public Translator obj = new Translator();
         public IActionResult Index()
         {
             return View();
         }
         public ActionResult Translated( string fromText)
         {
-            Translator temp = new Translator
-            {
-                fromText = fromText
-            };
-            temp.path = temp.MorseCode();
-            return View(temp);
+            
+            obj.fromText = fromText;
+            obj.path = obj.MorseCode();
+            return View(obj);
         }
        
     }
