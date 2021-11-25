@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Morse.Models
 {
@@ -15,43 +13,83 @@ namespace Morse.Models
 
         public string toMorseCode { get; set; }
 
-        public int counter { get; set;} 
+        public int counter { get; set; }
 
-        private readonly Dictionary<char, string> morseLettersCodes = new Dictionary<char, string> { { 'a', ".-" },{ 'b', "-..." },
-            {'c' , "-.-."} ,{'d',"-.." },{'e',"." },{'f',"..-." },{'g',"--." },{'h',"...." }
-            ,{'i',".."},{'j',".---" },{'k',"-.-" },{'l',".-.." },{'m',"--"},{'n',"-." },
+        /// <summary>
+        /// Morse-Alphabet
+        /// Further morse characters may be found e.g. here:  https://rn-wissen.de/wiki/index.php/RP6_-_Morse-Code
+        /// </summary>
+        private readonly Dictionary<char, string> morseLettersCodes = new Dictionary<char, string> {
+            // a-z
+            { 'a', ".-" },{ 'b', "-..." },{'c' , "-.-."} ,{'d',"-.." },{'e',"." },{'f',"..-." },{'g',"--." },
+            {'h',"...." },{'i',".."},{'j',".---" },{'k',"-.-" },{'l',".-.." },{'m',"--"},{'n',"-." },
             {'o',"---"},{'p',".--." },{'q',"--.-"},{'r',".-." },{'s',"..."},{ 't',"-"},
             {'u',"..-" },{'v',"...-" },{'w',".--" },{'x',"-..-" },{'y',"-.--" } ,{'z',"--.." } ,
+            
+            // Numbers (1-9,0)
             {'1',".----" } ,{ '2',"..---"},{'3',"...--" },{'4',"....-"},{'5'," ....." },
-            {'6',"-...." },{'7',"--..." },{'8',"---.." } ,{'9',"----." },{'0',"-----" } };
+            {'6',"-...." },{'7',"--..." },{'8',"---.." } ,{'9',"----." },{'0',"-----" },
+
+            //TODO: the mp3 files for the umlauts and special chars are still missing
+
+            // umlauts (äöüß) 
+            {'ä',".-.-" },{'ö',"---." },{'ü',"..--" } ,{'ß',"...--.." },
+            
+            
+            // special characters
+            {'@',".--.-." },{'!',"-.-.--" },{'\"',".-..-." },{'$',"...-..-" },{'&',".-..." },{'´',".---." },
+            {'(',"-.--." },{')',"-.--.-" },{'*',"-..-" },{'+',".-.-." }, {',',"--..--" },{'-',"-....-" },
+            {'.',".-.-.-" },{'/',"-..-." },{':',"---..." },{';',"-.-.-." },{'=',"-...-" },{'?',"..--.." },
+
+            //line break
+            {'\n',".-.-" } 
+
+        };
+
 
 
         public string MorseCode()
         {
-           
-
             Initiate();
             GetTextCode();
             return path;
         }
         private bool Initiate()
         {
-            try { 
-            WhiteSpaceDemlisher();
-            string pathAbsolute = @"wwwroot\sound\";
-            path = @"~/sound/" + fromText + "res" + ".mp3";
-            var v = File.Create(@"wwwroot\sound\" + fromText + "res" + ".mp3");
-            char[] textToLetters = fromText.ToCharArray();
-            for (int i = 0; i < textToLetters.Length; i++) {
-                if (Char.IsLetterOrDigit(textToLetters[i]))
+            try
+            {
+                var validMorsechars = string.Join("", morseLettersCodes.Keys);
+
+                fromText = Regex.Replace(fromText.ToLower(), $"[^{validMorsechars}]", " ");
+                string sanitizedFilename = SanitizeFileName(fromText);
+                sanitizedFilename = sanitizedFilename.Substring(0, Math.Min(20, sanitizedFilename.Length));
+
+                string pathAbsolute = @"wwwroot\sound\";
+                path = @"~/sound/" + sanitizedFilename + "res.mp3";
+                var invalidChars = Path.GetInvalidFileNameChars();
+
+                FileStream mp3FileStream = File.Create(@"wwwroot\sound\" + sanitizedFilename + "res.mp3");
+                char[] textToLetters = fromText.ToCharArray();
+                for (int i = 0; i < textToLetters.Length; i++)
                 {
-                    v.Write(File.ReadAllBytes(pathAbsolute + textToLetters[i] + ".mp3"));
+                    char morseLetter = textToLetters[i];
+                    if (char.IsLetterOrDigit(morseLetter))
+                    {
+                        try
+                        {
+                            mp3FileStream.Write(File.ReadAllBytes(pathAbsolute + morseLetter + ".mp3"));
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.Write($"Mp3 file '{morseLetter}.mp3' for character '{morseLetter}' is probably missing.");
+                            System.Diagnostics.Debug.Write(ex.Message);
+                        }
+                    }
                 }
-            }
-            v.Close();
+                mp3FileStream.Close();
                 return true;
             }
-              catch
+            catch
             {
                 fromText = "Incorrect Value";
                 return false;
@@ -77,16 +115,10 @@ namespace Morse.Models
                 return false;
             }
         }
-        private void WhiteSpaceDemlisher()
+
+        private string SanitizeFileName(string filename)
         {
-            char[] textForCheck = fromText.ToCharArray();
-            fromText = "";
-            for (int i = 0; i < textForCheck.Length; i++)
-            {
-                if (!Char.IsLetterOrDigit(textForCheck[i]) || Char.IsWhiteSpace(textForCheck[i])) textForCheck[i] = '-';
-                fromText += Char.ToLower(textForCheck[i]);
-            }
+            return string.Concat(filename.Split(Path.GetInvalidFileNameChars()));
         }
-       
     }
 }

@@ -1,5 +1,3 @@
-using System;
-
 namespace Morse.Models
 {
     public class ErrorViewModel
